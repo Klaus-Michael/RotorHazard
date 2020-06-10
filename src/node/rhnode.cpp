@@ -32,6 +32,25 @@
 #include "commands.h"
 #include "rheeprom.h"
 
+
+// ******************************************************************** //
+
+// *** Node Setup - Set node number here (1-8): ***
+#define NODE_NUMBER 8
+// Set to 1-8 for manual selection.
+// Leave at 0 for automatic selection via hardware pin.
+// For automatic selection, ground pins for each node:
+//                pin D4 open   pin D4 grounded
+// ground pin D5  node 1        node 5
+// ground pin D6  node 2        node 6
+// ground pin D7  node 3        node 7
+// ground pin D8  node 4        node 8
+
+// See https://github.com/RotorHazard/RotorHazard/blob/master/doc/Software%20Setup.md#receiver-nodes-arduinos
+
+// ******************************************************************** //
+
+
 // i2c address for node
 // Node 1 = 8, Node 2 = 10, Node 3 = 12, Node 4 = 14
 // Node 5 = 16, Node 6 = 18, Node 7 = 20, Node 8 = 22
