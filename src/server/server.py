@@ -4148,7 +4148,6 @@ def emit_laps_statistic_data(**params):
         'top_pilot_fastes_lap_array': top_pilot_fastes_lap_array,
         'pilot_details_array':pilot_details_array
     }
-
     if ('nobroadcast' in params):
         emit('laps_statistic_data', emit_payload)
     else:
