@@ -4035,7 +4035,6 @@ def set_vrx_node(data):
 
 
 def emit_laps_statistic_data(**params):
-    print "laps_statistic_data"
     total_top_fastes_laps = []
     laps_per_pilot = {}
     avg_50_laptime_array = {}
