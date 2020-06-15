@@ -4150,14 +4150,11 @@ def emit_laps_statistic_data(**params):
         'top_pilot_fastes_lap_array': top_pilot_fastes_lap_array,
         'pilot_details_array':pilot_details_array
     }
-    print "pre emit"
     if ('nobroadcast' in params):
         emit('laps_statistic_data', emit_payload)
-        print "nobroadcast emit"
     else:
         SOCKET_IO.emit('laps_statistic_data', emit_payload)
-        print "SOCKET_IO emit"
-    print "post emit"
+
 
 def heartbeat_thread_function():
     '''Allow time for connection handshake to terminate before emitting data'''
