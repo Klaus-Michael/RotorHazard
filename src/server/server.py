@@ -1026,6 +1026,8 @@ def on_load_data(data):
             emit_imdtabler_page(nobroadcast=True)
         elif load_type == 'vrx_list':
             emit_vrx_list(nobroadcast=True)
+        elif load_type == 'laps_statistic_data':
+            emit_laps_statistic_data(nobroadcast=True)            
         elif load_type == 'cluster_status':
             CLUSTER.emitStatus()
         elif load_type == 'hardware_log_init':
@@ -1712,6 +1714,7 @@ def on_reset_database(data):
     emit_class_data()
     emit_current_laps()
     emit_round_data_notify()
+    emit_laps_statistic_data()
     emit('reset_confirm')
 
     Events.trigger(Evt.DATABASE_RESET)
@@ -2310,6 +2313,7 @@ def on_save_laps():
     logger.info('Current laps saved: Heat {0} Round {1}'.format(RACE.current_heat, max_round+1))
     on_discard_laps(saved=True) # Also clear the current laps
     emit_round_data_notify() # live update rounds page
+    emit_laps_statistic_data() #live update the lap statistics page
 
 @SOCKET_IO.on('resave_laps')
 def on_resave_laps(data):
@@ -4028,12 +4032,10 @@ def set_vrx_node(data):
         logger.info("Set VRx {0} to node {1}".format(vrx_id, node))
     else:
         logger.error("Can't set VRx {0} to node {1}: Controller unavailable".format(vrx_id, node))
-    if ('nobroadcast' in params):
-        emit('laps_statistic_data', emit_payload)
-    else:
-        SOCKET_IO.emit('laps_statistic_data', emit_payload)
+
 
 def emit_laps_statistic_data(**params):
+    print "laps_statistic_data"
     total_top_fastes_laps = []
     laps_per_pilot = {}
     avg_50_laptime_array = {}
@@ -4148,11 +4150,14 @@ def emit_laps_statistic_data(**params):
         'top_pilot_fastes_lap_array': top_pilot_fastes_lap_array,
         'pilot_details_array':pilot_details_array
     }
-
+    print "pre emit"
     if ('nobroadcast' in params):
         emit('laps_statistic_data', emit_payload)
+        print "nobroadcast emit"
     else:
         SOCKET_IO.emit('laps_statistic_data', emit_payload)
+        print "SOCKET_IO emit"
+    print "post emit"
 
 def heartbeat_thread_function():
     '''Allow time for connection handshake to terminate before emitting data'''
