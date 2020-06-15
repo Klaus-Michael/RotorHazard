@@ -1026,8 +1026,6 @@ def on_load_data(data):
             emit_imdtabler_page(nobroadcast=True)
         elif load_type == 'vrx_list':
             emit_vrx_list(nobroadcast=True)
-        elif load_type == 'laps_statistic_data':
-            emit_laps_statistic_data(nobroadcast=True)
         elif load_type == 'cluster_status':
             CLUSTER.emitStatus()
         elif load_type == 'hardware_log_init':
@@ -1714,7 +1712,6 @@ def on_reset_database(data):
     emit_class_data()
     emit_current_laps()
     emit_round_data_notify()
-    emit_laps_statistic_data()
     emit('reset_confirm')
 
     Events.trigger(Evt.DATABASE_RESET)
@@ -2313,7 +2310,6 @@ def on_save_laps():
     logger.info('Current laps saved: Heat {0} Round {1}'.format(RACE.current_heat, max_round+1))
     on_discard_laps(saved=True) # Also clear the current laps
     emit_round_data_notify() # live update rounds page
-    emit_laps_statistic_data() #live update the lap statistics page
 
 @SOCKET_IO.on('resave_laps')
 def on_resave_laps(data):
@@ -3993,7 +3989,6 @@ def emit_imdtabler_rating():
         }
     SOCKET_IO.emit('imdtabler_rating', emit_payload)
 
-
 def emit_vrx_list(*args, **params):
     ''' get list of connected VRx devices '''
     if vrx_controller:
@@ -4158,6 +4153,7 @@ def emit_laps_statistic_data(**params):
         emit('laps_statistic_data', emit_payload)
     else:
         SOCKET_IO.emit('laps_statistic_data', emit_payload)
+
 #
 # Program Functions
 #
