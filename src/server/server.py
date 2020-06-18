@@ -1989,7 +1989,7 @@ def on_schedule_race(data):
         'scheduled_at': RACE.scheduled_time
         })
 
-    SOCKET_IO.emit('RACE.scheduled', {
+    SOCKET_IO.emit('race_scheduled', {
         'scheduled': RACE.scheduled,
         'scheduled_at': RACE.scheduled_time
         })
